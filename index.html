@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Храморра | Истинноверец</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            letter-spacing: -0.05rem;
+        }
+        
+        body {
+            background: #000;
+            color: #fff;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #manifesto {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            z-index: 20;
+            padding: 1rem;
+            background: #000;
+        }
+        
+        .manifesto-text {
+            font-size: 6.5vw;
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 0.85;
+            margin: 0.5rem 0;
+        }
+        
+        #password-section {
+            position: relative;
+            z-index: 30;
+            width: 90%;
+            max-width: 700px;
+            background: #000;
+            border: 0.7rem solid #fff;
+            padding: 2.5rem;
+        }
+        
+        .input-group {
+            display: flex;
+            margin-top: 2rem;
+        }
+        
+        input {
+            border: none;
+            padding: 1.5rem;
+            font-size: 1.4rem;
+            font-weight: bold;
+            background: #000;
+            color: #fff;
+            border: 0.4rem solid #fff;
+            flex: 1;
+            min-width: 0;
+            outline: none;
+        }
+        
+        input::placeholder {
+            color: #aaa;
+            text-transform: uppercase;
+        }
+        
+        button {
+            border: none;
+            padding: 1.5rem 2.5rem;
+            font-size: 1.4rem;
+            font-weight: 900;
+            background: #fff;
+            color: #000;
+            cursor: pointer;
+            text-transform: uppercase;
+            border: 0.4rem solid #fff;
+            margin-left: 0.7rem;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background: #000;
+            color: #fff;
+        }
+        
+        #message {
+            height: 2.5rem;
+            margin-top: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        
+        #background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <!-- Манифест (изначально скрыт) -->
+    <div id="manifesto" style="display: none;">
+        <div class="manifesto-text">СПАСЕНИЕ ХРАМОРРЫ —</div>
+        <div class="manifesto-text">СМЕРТЬ ИСТИННОВЕРЦА</div>
+    </div>
+    
+    <!-- Форма ввода пароля -->
+    <div id="password-section">
+        <h2 style="font-size: 2.5rem; text-align: center; margin-bottom: 1.5rem; text-transform: uppercase;">ДОСТУП К АРХИВАМ ХРАМОРРЫ</h2>
+        <p style="font-size: 1.6rem; text-align: center; text-transform: uppercase;">Введите кодовое слово для активации протокола</p>
+        
+        <div class="input-group">
+            <input 
+                type="password" 
+                id="passwordInput" 
+                placeholder="Введите кодовое слово"
+                autocomplete="off"
+            >
+            <button onclick="checkPassword()">
+                Активировать
+            </button>
+        </div>
+        
+        <div id="message"></div>
+    </div>
+    
+    <!-- Картинка, которая появится на фоне -->
+    <img id="background-image" src="" alt="Секретное изображение">
+
+    <script>
+        function checkPassword() {
+            const password = document.getElementById('passwordInput').value;
+            const correctPassword = "Шумолесье";
+            const messageEl = document.getElementById('message');
+            const passwordSection = document.getElementById('password-section');
+            const manifesto = document.getElementById('manifesto');
+            const backgroundImage = document.getElementById('background-image');
+            
+            // Нормализация ввода (без пробелов, нижний регистр)
+            const normalizedPassword = password.toLowerCase().replace(/\s+/g, '');
+            
+            if(normalizedPassword === correctPassword.toLowerCase()) {
+                messageEl.textContent = "ДОСТУП РАЗРЕШЁН. АКТИВАЦИЯ ПРОТОКОЛА";
+                
+                // Задержка перед показом контента для драматизма
+                setTimeout(() => {
+                    passwordSection.style.display = "none";
+                    
+                    // Устанавливаем и показываем фоновую картинку
+                    backgroundImage.src = "secret_map.jpg"; // УКАЖИТЕ ПУТЬ К КАРТИНКЕ
+                    backgroundImage.style.display = "block";
+                    
+                    // Показываем манифест поверх картинки
+                    manifesto.style.display = "block";
+                }, 1000);
+                
+            } else {
+                messageEl.textContent = "ОШИБКА: НЕВЕРНОЕ КОДОВОЕ СЛОВО";
+                // Эффект ошибки
+                passwordSection.style.borderColor = "#ff0000";
+                setTimeout(() => {
+                    passwordSection.style.borderColor = "#fff";
+                    messageEl.textContent = "";
+                }, 1500);
+            }
+        }
+        
+        // Обработка нажатия Enter
+        document.getElementById('passwordInput')
+            .addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    checkPassword();
+                }
+            });
+            
+        // Фокус на поле ввода при загрузке
+        window.onload = function() {
+            document.getElementById('passwordInput').focus();
+        }
+    </script>
+</body>
+</html>
